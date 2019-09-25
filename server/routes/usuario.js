@@ -6,8 +6,31 @@ const Usuario = require('../models/usuario');
 
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('GET request to the homepage')
+})
+
 app.get('/usuario', function (req, res) {
-  res.json('get usuario');
+
+  Usuario.find({}, (err, usuario) => {
+    
+    console.log('finddd');
+    
+    
+    if (err) {
+      return res.status.json ({
+        ok: false,
+        err
+      });
+    }
+
+    res.json({
+      ok: true,
+      usuario: usuario
+    });
+    
+  });
+
 });
 
 app.post('/usuario', function (req, res) {
